@@ -6999,6 +6999,7 @@ class DataFrame:
         validate: JoinValidation = "m:m",
         join_nulls: bool = False,
         coalesce: bool | None = None,
+        maintain_order: bool | None = None,
     ) -> DataFrame:
         """
         Join in SQL-like fashion.
@@ -7064,6 +7065,10 @@ class DataFrame:
             .. note::
                 Joining on any other expressions than `col`
                 will turn off coalescing.
+        maintain_order
+            Whether to preserve the row order of the left DataFrame.
+            This is currently true by default for left joins and false for others.
+            The default behavior will change in the future so specify True if you depend on this.
 
         See Also
         --------
@@ -7161,6 +7166,7 @@ class DataFrame:
                 validate=validate,
                 join_nulls=join_nulls,
                 coalesce=coalesce,
+                maintain_order=maintain_order,
             )
             .collect(_eager=True)
         )
